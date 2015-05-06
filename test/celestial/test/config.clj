@@ -9,31 +9,30 @@
   (validate-conf (dissoc-in* local-prox ks)))
 
 (fact "legal configuration"
-      (validate-conf local-prox)  => {})
+   (validate-conf local-prox)  => {})
 
 (fact "missing celestial options detected"
-      (validate-missing :celestial :https-port) =>  {:celestial {:https-port "must be present"}}  
-      (validate-missing :celestial :port) => {:celestial {:port "must be present"}})
+   (validate-missing :celestial :port) => {:celestial {:port "must be present"}})
 
 (fact "missing proxmox options"
-    (validate-missing :hypervisor :dev :proxmox :nodes :proxmox-a :password) =>  
-      '{:hypervisor {:dev {:proxmox {:nodes ({:proxmox-a {:password "must be present"}})}}}}
+   (validate-missing :hypervisor :dev :proxmox :nodes :proxmox-a :password) =>  
+     '{:hypervisor {:dev {:proxmox {:nodes ({:proxmox-a {:password "must be present"}})}}}}
      
-    (validate-missing :hypervisor :dev :proxmox :nodes) => {:hypervisor {:dev {:proxmox {:nodes "must be present"}}}}
-    (validate-missing :hypervisor :dev :proxmox :master) => {:hypervisor {:dev {:proxmox {:master "must be present"}}}}
+   (validate-missing :hypervisor :dev :proxmox :nodes) => {:hypervisor {:dev {:proxmox {:nodes "must be present"}}}}
+   (validate-missing :hypervisor :dev :proxmox :master) => {:hypervisor {:dev {:proxmox {:master "must be present"}}}}
       )
 
 (fact "non legal proxmox template flavor" 
-  (validate-conf (assoc-in local-prox [:hypervisor :dev :proxmox :ostemplates :ubuntu-12.04 :flavor] :bar)) => 
+    (validate-conf (assoc-in local-prox [:hypervisor :dev :proxmox :ostemplates :ubuntu-12.04 :flavor] :bar)) => 
      '{:hypervisor {:dev {:proxmox {:ostemplates ({:ubuntu-12.04 {:flavor "flavor must be either #{:debian :redhat}"}})}}}} 
       )
 
 (fact "missing aws options"
-    (validate-conf (assoc-in local-prox [:hypervisor :dev :aws] {})) => 
+   (validate-conf (assoc-in local-prox [:hypervisor :dev :aws] {})) => 
       {:hypervisor {:dev {:aws {:access-key "must be present" :secret-key "must be present"}}}})
 
 (fact "missing openstack  options"
-    (validate-conf (assoc-in local-prox [:hypervisor :dev :openstack] {})) => 
+   (validate-conf (assoc-in local-prox [:hypervisor :dev :openstack] {})) => 
       {:hypervisor {:dev {:openstack {:username "must be present" :password "must be present" :endpoint "must be present"}}}})
 
 (fact "vcenter validations" 
