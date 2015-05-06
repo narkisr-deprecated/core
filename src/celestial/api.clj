@@ -61,8 +61,7 @@
         {:body (<< "Unexpected error ~(.getMessage e) of type ~(class e) contact celestial admin for more info") :status 500}))))
 
 (defn force-https [rs]
-  (binding [friend/*default-scheme-ports* {:http (get! :celestial :port) :https (get! :celestial :https-port)}]
-    (friend/requires-scheme rs :https)))
+  (binding [friend/*default-scheme-ports* {:http (get! :celestial :port)}] rs))
 
 (defn compose-routes
   "Composes celetial apps" 
@@ -76,7 +75,7 @@
   (-> (compose-routes secured?) 
       (wrap-swag) 
       (wrap-idle-session-timeout {:timeout (or (get* :celestial :session-timeout) 600) :timeout-response (ring.util.response/redirect (<< "/login"))})
-      (wrap-session {:cookie-name "celestial" :store (cookie-store) :cookie-attrs {:secure true :max-age 3600}})
+      (wrap-session {:cookie-name "celestial" :store (cookie-store) :cookie-attrs {:max-age 3600}})
       (wrap-restful-format :formats [:json-kw :edn :yaml-kw :yaml-in-html])
       (handler/api)
       (wrap-frame-options :deny)

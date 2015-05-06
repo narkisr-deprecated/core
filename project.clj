@@ -42,7 +42,7 @@
                  [ring "1.3.0"]
                  [compojure "1.1.8" :exclusions  [ring/ring-core]]
                  ; ring security
-                 [com.cemerick/friend "0.2.0"] 
+                 [com.cemerick/friend "0.2.1"] 
                  [ring/ring-session-timeout "0.1.0"]
                  [ring/ring-headers "0.1.0"] 
                  ; hypervisors

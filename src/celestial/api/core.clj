@@ -13,7 +13,6 @@
   "Core api components"
   (:require 
     [clojure.java.io :refer (file)]
-    [celestial.ssl :refer (generate-store)]
     [celestial.api :refer (app)]
     [ring.adapter.jetty :refer (run-jetty)] 
     [components.core :refer (Lifecyle)] 
@@ -24,32 +23,16 @@
 
 (def jetty (atom nil))
 
-(defn cert-conf 
-  "Celetial cert configuration" 
-  [k]
-  (get! :celestial :cert k))
-
-(defn default-key 
-  "Generates a default keystore if missing" 
-  []
-  (when-not (.exists (file (cert-conf :keystore)))
-    (info "generating a default keystore")
-    (generate-store (cert-conf :keystore) (cert-conf :password))))
-
 (defrecord Jetty 
   [] 
   Lifecyle
-  (setup [this]
-    (default-key))
+  (setup [this])
 
   (start [this]
     (info "Starting jetty")
     (reset! jetty
       (run-jetty (app true)
-       {:port (get! :celestial :port) :join? false
-        :ssl? true :keystore (cert-conf :keystore)
-        :key-password  (cert-conf :password)
-        :ssl-port (get! :celestial :https-port)}))
+       {:port (get! :celestial :port) :join? false }))
     )
   (stop [this]
     (when @jetty 

@@ -1,7 +1,6 @@
 {
  :celestial {
    :port 8082
-   :https-port 8443
    :log {
      :level :trace
      :path "celestial.log"
@@ -15,11 +14,6 @@
      :workers {
        :stage 2
      }
-   }
-
-   :cert {
-     :password "foobar" 
-     :keystore "foo.keystore"
    }
 
    ;; :nrepl {

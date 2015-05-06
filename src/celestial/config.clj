@@ -67,7 +67,7 @@
 
 (def ^{:doc "Base config validation"} celestial-v
   {:celestial
-   {:port #{:required :number} :https-port #{:required :number} :session-timeout #{:number} 
+   {:port #{:required :number} :session-timeout #{:number} 
     :log {
        :level #{:required :levels} 
        :path #{:required :String}
@@ -75,7 +75,6 @@
           :host #{:String} :type #{:central-logging}
         }
     } 
-    :cert {:password #{:required :String} :keystore #{:required :String}} 
     :nrepl {:port #{:number}}}})
 
 (validation :node*
