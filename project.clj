@@ -41,6 +41,7 @@
                  [ring/ring-jetty-adapter "1.2.0"]
                  [ring "1.3.0"]
                  [compojure "1.1.8" :exclusions  [ring/ring-core]]
+                 [ring-cors "0.1.7"]
                  ; ring security
                  [com.cemerick/friend "0.2.1"] 
                  [ring/ring-session-timeout "0.1.0"]
@@ -68,7 +69,7 @@
   :bin {:name "celestial"}
 
   :profiles {
-     :refresh {
+     :refresh {; used for live repl development
         :repl-options {
           :init-ns user               
           :timeout 120000
@@ -77,7 +78,8 @@
         :dependencies [[org.clojure/tools.namespace "0.2.4"] 
                        [org.clojure/tools.trace "0.7.5"]
                        [midje "1.5.1" :exclusions [org.clojure/core.unify]]
-                       [clojure-complete "0.2.3"] [redl "0.2.0"]]
+                       [clojure-complete "0.2.3"] 
+                       [redl "0.2.0"]]
         :injections  [(require '[redl core complete])]
         :resource-paths  ["src/main/resources/" "pkg/etc/celestial/"]
         :source-paths  ["dev" "src"]

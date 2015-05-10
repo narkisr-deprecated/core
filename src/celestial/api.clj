@@ -12,6 +12,7 @@
 (ns celestial.api
   (:refer-clojure :exclude [type])
   (:require 
+    [ring.middleware.cors :refer [wrap-cors]]
     [celestial.roles :refer (admin su)]
     [ring.middleware.format :refer (wrap-restful-format)]
     [ring.middleware.session-timeout :refer (wrap-idle-session-timeout)]
@@ -60,15 +61,25 @@
         (error e)
         {:body (<< "Unexpected error ~(.getMessage e) of type ~(class e) contact celestial admin for more info") :status 500}))))
 
-(defn force-https [rs]
+(defn add-cors [routes]
+   (if-let [cs (get* :celestial :cors)]
+     (wrap-cors routes 
+       :access-control-allow-headers #{:accept :content-type}
+       :access-control-allow-origin (mapv re-pattern cs)
+       :access-control-allow-methods  [:get :put :post :delete])
+     routes 
+     ))
+
+(defn bind-port [rs]
   (binding [friend/*default-scheme-ports* {:http (get! :celestial :port)}] rs))
 
 (defn compose-routes
   "Composes celetial apps" 
   [secured?]
-  (let [rs (routes public (swagger-routes version) (if secured? (sec/secured-app app-routes) app-routes) )]
-    (if secured? 
-      (force-https rs) rs)))
+  (let [sw (swagger-routes version)
+        ap (if secured? (sec/secured-app app-routes) app-routes)
+        rs (routes public sw ap)]
+     (-> rs bind-port add-cors)))
 
 (defn app [secured?]
   "The api routes, secured? will enabled authentication"
