@@ -4,6 +4,7 @@
   (:require 
     [celestial.model :as m]
     [celestial.fixtures.data :as d]
+    [celestial.fixtures.core :refer (with-conf)]
     [celestial.api.users :refer (into-persisted)]
     [celestial.jobs :as jobs]
     [celestial.persistency.systems :as s] 
@@ -15,7 +16,7 @@
     midje.sweet ring.mock.request
     [celestial.api :only (app)]))
 
-(def non-sec-app (app false))
+(def non-sec-app (with-conf (app false)))
 
 (fact "system get"
   (non-sec-app (request :get (<< "/systems/1"))) => (contains {:status 200}) 
@@ -59,8 +60,7 @@
      (s/get-system "1" :env)  => :dev
      (jobs/enqueue "create" {:identity "1" :args [{:system-id 1}] :tid nil :env :dev :user nil}) => nil))
 
-(let [user (merge d/admin {:roles ["admin"] :envs ["dev" "qa"]}) 
-      ops-vec (into []  m/operations)]
+(let [user (merge d/admin {:roles ["admin"] :envs ["dev" "qa"]}) ops-vec (into []  m/operations)]
   (fact "user conversion"
     (dissoc (into-persisted user) :password) => 
       {:envs [:dev :qa] :roles #{:celestial.roles/admin} :username "admin" :operations ops-vec}

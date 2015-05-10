@@ -1,7 +1,7 @@
 {
  :celestial {
    :port 8082
-   :cors ["*"]
+   :cors [".*"]
    :log {
      :level :trace
      :path "celestial.log"
