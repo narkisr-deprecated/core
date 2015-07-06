@@ -1,16 +1,17 @@
 {
- :shared {
+ :defaults {
+   :dev {
     :owner "ronen"
     :env :dev
-    :machine {:hostname celestial.generators/hostgen :domain "local"}
+    :machine {:hostname celestial.generators/host-gen :domain "local"}
     :openstack {:tenant "skywind" :key-name "foo"}
+   }
   } 
  
  
   :systems [
-    {:count 2 :template :small-redis } 
-    {:count 1 :template :tiny-jvm }        
+    {:count 2 :template :small-redis :instances [1 2] } 
+    {:count 1 :template :tiny-jvm :instances [] }        
   ]
     
-  
 }
