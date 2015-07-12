@@ -49,7 +49,7 @@
     (trace "saved status" (merge spec {:status status :end (System/currentTimeMillis)}))
     {:status status}))
 
-(defn job-exec [f  {:keys [message attempt]}]
+(defn job-exec [f {:keys [message attempt]}]
   "Executes a job function tries to lock identity first (if used)"
   (let [{:keys [identity args tid env user] :as spec} message]
     (set-user user
