@@ -1,10 +1,8 @@
 {
  :defaults {
    :dev {
-    :owner "ronen"
-    :env :dev
     :machine {:hostname celestial.generators/host-gen :domain "local"}
-    :openstack {:tenant "skywind" :key-name "foo"}
+    :openstack {:tenant "skywind" :key-name "celestial"}
    }
   } 
  
