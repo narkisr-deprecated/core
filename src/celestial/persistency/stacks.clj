@@ -16,7 +16,7 @@
 
 (validation :shared* 
   (every-kv {
-    :owner #{:required :String} :env #{:required :Keyword} :machine #{:Map}
+     :machine #{:Map} :openstack #{:Map}
    }))
 
 (def stack-base {
