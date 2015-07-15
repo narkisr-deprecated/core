@@ -21,8 +21,8 @@
       )))
 
 (fact "stack validations" :validations :stacks
-   (s/validate-stack (dissoc-in* simple-stack [:defaults :dev :owner])) => 
-     (throws ExceptionInfo (with-m? '{:defaults ({:dev {:owner "must be present"}})}))
+   (s/validate-stack (assoc-in simple-stack [:defaults :dev :machine] [])) => 
+      (throws ExceptionInfo (with-m? '{:defaults ({:dev {:machine "must be a map"}})}))
    (s/validate-stack (assoc-in simple-stack [:systems 2] {})) => 
       (throws ExceptionInfo 
         (with-m? '{:systems ({2 {:count "must be present", :template "must be present"}})})))
