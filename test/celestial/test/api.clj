@@ -5,7 +5,7 @@
     [celestial.model :as m]
     [celestial.fixtures.data :as d]
     [celestial.api.users :refer (into-persisted)]
-    [celestial.jobs :as jobs]
+    [celestial.jobs.core :as jobs]
     [celestial.persistency.systems :as s] 
     [clojure.core.strint :refer (<<)]
     [cemerick.friend :as friend]

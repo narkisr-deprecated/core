@@ -6,8 +6,9 @@
     [taoensso.carmine.locks :refer (with-lock acquire-lock)]
     [celestial.common :refer (minute)]
     [clojure.core.strint :refer (<<)]
-    [celestial.jobs :refer (initialize-workers workers job-exec create-wks enqueue)] 
-    [celestial.jobs :as jobs])
+    [celestial.jobs.systems :refer (job-exec)]
+    [celestial.jobs.common :refer (save-status)]
+    [celestial.jobs.core :refer (enqueue) :as jobs])
   (:use midje.sweet)
   (:import java.lang.AssertionError))
 
@@ -18,7 +19,7 @@
      (s/get-system "red1") => {:machine {:hostname "red1"}}
      (server-conn) => {}
      (acquire-lock {} "red1" 1800000 300000) => nil :times 1
-     (jobs/save-status anything :success)  => {:status :success}  :times 1
+     (save-status anything :success)  => {:status :success}  :times 1
      ))
 
 
