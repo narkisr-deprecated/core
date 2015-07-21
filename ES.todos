@@ -1,0 +1,4 @@
+* Do periodic flush (only for test flush all)
+* Consider using refresh instead of flush
+* Add a re-index api call
+* Drop embedded ES and use a server
