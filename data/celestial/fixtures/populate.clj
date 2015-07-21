@@ -11,6 +11,7 @@
     [celestial.redis :as red]  
     [celestial.persistency.core :as c]  
     [celestial.persistency.systems :as s]
+    [celestial.persistency.stacks :as st]
     [celestial.persistency.actions :as a]
     [celestial.fixtures.data :refer (admin ronen) :as d]))
 
@@ -83,6 +84,14 @@
   (s/add-template d/small-redis)
   (s/add-template d/tiny-jvm))
 
+
+(defn add-stacks
+   "populate stacks" 
+   []
+  (st/add-stack d/simple-stack)
+  )
+
+
 (defn re-initlize
   "Re-init datastores"
   ([] (re-initlize false))
@@ -94,7 +103,7 @@
 
 (def populators {
   :users add-users :types add-types :actions add-actions
-  :systems add-systems :templates add-templates
+  :systems add-systems :templates add-templates :stacks add-stacks
 })
 
 (defn populate-all 
