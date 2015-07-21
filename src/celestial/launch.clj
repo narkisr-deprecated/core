@@ -27,7 +27,7 @@
     [hypervisors.networking :refer (initialize-networking)]
     [es.core :as es]
     [celestial.metrics :as met]
-    [celestial.jobs :as jobs]
+    [celestial.jobs.core :as jobs]
     [celestial.api.core :as api]
     [celestial.schedule :as sch] 
     ))

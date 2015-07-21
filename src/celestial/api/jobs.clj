@@ -21,7 +21,7 @@
     [gelfino.timbre :refer (get-tid)]
     [celestial.persistency [types :as t] [users :as u]]
     [celestial.persistency.actions :refer (find-action-for)]
-    [celestial.jobs :as jobs :refer (enqueue)]
+    [celestial.jobs.core :as jobs :refer (enqueue)]
     [celestial.redis :refer (clear-locks)]
     [es.jobs :as es]
     [swag.core :refer (GET- POST- PUT- DELETE- defroutes- errors)]
