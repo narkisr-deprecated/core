@@ -24,7 +24,7 @@
 
 (defmodel stack
   :shared {
-    :type "Hash" :description "Shared peroperties include: :owner :env :machine :openstack/:aws etc"
+    :type "Hash" :description "Shared peroperties include: :machine :openstack/:aws etc"
   }
   :systems {
     :type "List" :description "count per template {:count 1 :template :foo}"
@@ -52,5 +52,8 @@
             (success {:message "stack updated" :id id})))))
 
 (defroutes- stacks-ro {:path "/stacks" :description "Read only stacks api"}
-  (GET- "/stacks/:id" [^:int id] {:nickname "getStackById" :summary "Get stack by its id"}
+   (GET- "/stacks" [] {:nickname "getStacks" :summary "Get all stacks"}
+        (success {:stacks (into {} (map #(vector % (s/get-stack %)) (s/all-stacks)))}))
+
+   (GET- "/stacks/:id" [^:int id] {:nickname "getStackById" :summary "Get stack by its id"}
      (success (s/get-stack id))))
