@@ -15,7 +15,7 @@
     [celestial.common :only (get* minute import-logging)]
     )
   (:require  
-    [celestial.jobs.systems :refer (jobs initialize-workers)]
+    [celestial.jobs.systems :as sj]
     [celestial.jobs.common :refer (job*)]
     [flatland.useful.map :refer (map-vals)]
     [taoensso.carmine :as car]
@@ -31,7 +31,7 @@
 (defn enqueue 
   "Placing job in redis queue"
   [queue payload] 
-  {:pre [(contains? (jobs) (keyword queue))]}
+  {:pre [(contains? (sj/jobs) (keyword queue))]}
   (trace "submitting" payload "to" queue) 
   (wcar (mq/enqueue queue payload)))
 
@@ -58,7 +58,7 @@
 (defn running-jobs-status
   "Get all jobs status" 
   []
-  (reduce (fn [r t] (into r (queue-status (name t)))) [] (keys (jobs))))
+  (reduce (fn [r t] (into r (queue-status (name t)))) [] (keys (sj/jobs))))
 
 (defn by-env 
    "filter jobs status by envs" 
@@ -72,7 +72,7 @@
 
 (defn clear-queues []
   (info "Clearing job queues")
-  (apply mq/clear-queues (server-conn) (mapv name (keys (jobs)))))
+  (apply mq/clear-queues (server-conn) (mapv name (keys (sj/jobs)))))
 
 (defn shutdown-workers []
   (doseq [[k ws] @workers]
@@ -89,7 +89,7 @@
     (when (= (job* :reset-on) :start)
       (clear-queues)
       (clear-locks))
-      (initialize-workers workers))
+      (sj/initialize-workers workers))
   (stop [this]
     (info "Stopping job workers")
     (shutdown-workers)
