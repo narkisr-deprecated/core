@@ -2,7 +2,7 @@
   (:require 
     [celestial.common :refer (resolve-)]
     [celestial.config :refer (config)]
-    [celestial.workflows :refer (run-hooks)])
+    [celestial.workflows.common :refer (run-hooks)])
   (:use midje.sweet)
   (:import clojure.lang.ExceptionInfo))
 

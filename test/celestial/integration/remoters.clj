@@ -8,7 +8,7 @@
     [me.raynes.fs :refer (exists?)]
     [celestial.integration.workflows.common :refer (spec get-spec)]
     [celestial.fixtures.populate :refer (populate-system)]  
-    [celestial.workflows :refer (reload destroy)]
+    [celestial.workflows.systems :refer (reload destroy)]
     [celestial.model :refer (rconstruct)]
     remote.capistrano)
   (:use midje.sweet))

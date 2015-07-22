@@ -6,7 +6,7 @@
     [celestial.fixtures.core :refer (with-defaults) :as f]  
     [celestial.fixtures.populate :refer (add-users)]  
     [celestial.fixtures.data :as d]  
-    [celestial.workflows :refer (reload provision destroy)]
+    [celestial.workflows.systems :refer (reload provision destroy)]
     [celestial.redis :refer (clear-all)]
     [celestial.config :refer (path)]
     )
