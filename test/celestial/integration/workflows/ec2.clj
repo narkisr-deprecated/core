@@ -8,7 +8,7 @@
      (redis-type redis-ec2-spec local-conf redis-ec2-centos)]  
     [celestial.fixtures.populate :refer (populate-system)]  
     [celestial.integration.workflows.common :refer (spec get-spec)]
-    [celestial.workflows :as wf])
+    [celestial.workflows.systems :as wf])
   (:import clojure.lang.ExceptionInfo)
   (:use midje.sweet))
 

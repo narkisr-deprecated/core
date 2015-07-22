@@ -6,7 +6,7 @@
      (redis-type redis-prox-spec local-conf)]
     [celestial.persistency.systems :as s]
     [celestial.fixtures.populate :refer (populate-system)]  
-    [celestial.workflows :as wf])
+    [celestial.workflows.systems :as wf])
   (:import clojure.lang.ExceptionInfo)
   (:use midje.sweet))
 

@@ -7,7 +7,7 @@
     [celestial.fixtures.data :refer (redis-type local-conf redis-freenas)]  
     [celestial.fixtures.populate :refer (populate-system)]  
     [celestial.integration.workflows.common :refer (spec get-spec)]
-    [celestial.workflows :as wf]
+    [celestial.workflows.systems :as wf]
     )
   (:use midje.sweet)
  )

@@ -7,7 +7,7 @@
     [celestial.fixtures.data :refer (redis-type local-conf redis-openstack-spec)]  
     [celestial.fixtures.populate :refer (populate-system)]  
     [celestial.integration.workflows.common :refer (spec get-spec)]
-    [celestial.workflows :as wf]
+    [celestial.workflows.systems :as wf]
     [openstack.networking :refer (addresses-ip)]
     [clojure.java.data :refer [from-java]]
     [openstack.common :refer (servers openstack block-storage)]
