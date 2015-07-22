@@ -9,4 +9,24 @@
   limitations under the License.)
 
 (ns celestial.jobs.stacks
+  "Stack jobs"
+  (:require 
+    [taoensso.timbre :refer (refer-timbre)]
+    [taoensso.carmine.locks :refer (with-lock)]
+    [gelfino.timbre :refer (set-tid)]
+    [celestial.redis :refer (create-worker server-conn)]
+    [celestial.model :refer (set-env)]
+    [celestial.security :refer (set-user)]
+    [celestial.workflows.stacks :as wf]  
+    [flatland.useful.map :refer (map-vals)]
+    [celestial.persistency.stacks :as s]
+    [celestial.common :refer (minute)]
+    [celestial.jobs.common :refer (save-status apply-config job*)])
  )
+
+(refer-timbre)
+
+(defn jobs []
+  {:reload [wf/reload 2] :destroy [wf/destroy 2] :provision [wf/provision 2]
+   :stage [wf/stage 2] :run-action [wf/run-action 2] :create [wf/create 2]
+   :start [wf/start 2] :stop [wf/stop 2] :clear [wf/clear 1] :clone [wf/clone 1]})

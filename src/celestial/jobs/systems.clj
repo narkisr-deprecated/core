@@ -17,7 +17,7 @@
     [celestial.redis :refer (create-worker server-conn)]
     [celestial.model :refer (set-env)]
     [celestial.security :refer (set-user)]
-    [celestial.workflows :as wf]  
+    [celestial.workflows.systems :as wf]  
     [flatland.useful.map :refer (map-vals)]
     [celestial.persistency.systems :as s]
     [celestial.common :refer (minute)]

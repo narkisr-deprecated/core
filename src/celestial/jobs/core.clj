@@ -12,9 +12,10 @@
   (:refer-clojure :exclude [identity])
   (:use   
     [clojure.core.strint :only (<<)]
-    [celestial.common :only (get* minute import-logging)]
+    [celestial.common :only (get* minute)]
     )
   (:require  
+    [taoensso.timbre :refer  (refer-timbre)]
     [celestial.jobs.systems :as sj]
     [celestial.jobs.common :refer (job*)]
     [flatland.useful.map :refer (map-vals)]
@@ -24,7 +25,7 @@
     [celestial.redis :refer (create-worker wcar server-conn clear-locks)]
     ))
 
-(import-logging)
+(refer-timbre)
 
 (def workers (atom {}))
 
