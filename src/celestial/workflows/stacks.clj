@@ -13,6 +13,8 @@
   "Stack workflows"
   (:require 
     [celestial.workflows.common :refer (deflow run-hooks)] 
+    [celestial.workflows.systems :refer (stage)] 
+    [celestial.persistency.systems :as s]
     [taoensso.timbre :refer  (refer-timbre)]
     [clojure.core.strint :require (<<)]
     [slingshot.slingshot :require  [throw+ try+]]
@@ -61,7 +63,12 @@
 
 (defn stage
   "create and provision"
-  [spec] )
+  [{:keys [systems defaults] :as spec}] 
+  (let [provided {}]
+    (doseq [{:keys [count template]} systems]
+      (map #(s/templatize template provided) (range count))
+    )) 
+  )
 
 (deflow run-action
   "Runs an action"
