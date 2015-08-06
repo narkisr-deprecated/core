@@ -8,8 +8,8 @@
  
  
   :systems [
-    {:count 2 :template :small-redis :instances [1 2] } 
-    {:count 1 :template :tiny-jvm :instances [] }        
+    {:count 2 :template "small-redis" :instances [1 2] } 
+    {:count 1 :template "tiny-jvm" :instances [] }        
   ]
     
 }
