@@ -9,7 +9,7 @@
 (entity {:version 1} stack)
 
 (validation :count {
-  :template #{:required :Keyword} :count #{:required :Integer} :instances #{:Vector}
+  :template #{:required :String} :count #{:required :Integer} :instances #{:Vector}
 })
 
 (validation :system* (every-v #{:count}))
