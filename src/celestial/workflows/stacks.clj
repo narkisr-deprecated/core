@@ -13,13 +13,12 @@
   "Stack workflows"
   (:require 
     [celestial.workflows.common :refer (deflow run-hooks)] 
-    [celestial.workflows.systems :refer (stage)] 
+    [celestial.workflows.systems :as wfs] 
     [celestial.persistency.systems :as s]
     [taoensso.timbre :refer  (refer-timbre)]
-    [clojure.core.strint :require (<<)]
-    [slingshot.slingshot :require  [throw+ try+]]
-    )
-  )
+    [clojure.core.strint :refer (<<)]
+    [slingshot.slingshot :refer  [throw+ try+]]
+    [clojure.core.async :refer (<!! >!! to-chan) :as async]))
 
 (refer-timbre)
 
@@ -61,14 +60,15 @@
   "Run provisioning on stack instances"
   [spec])
 
-(defn stage
+(defn template-chan [provided {:keys [count template]}] 
+  (to-chan (map #(s/templatize template provided) (range count))))
+
+(deflow stage
   "create and provision"
   [{:keys [systems defaults] :as spec}] 
-  (let [provided {}]
-    (doseq [{:keys [count template]} systems]
-      (map #(s/templatize template provided) (range count))
-    )) 
-  )
+  (let [provided {} cs (async/merge (map (partial template-chan provided) systems))]
+     
+    ))
 
 (deflow run-action
   "Runs an action"
