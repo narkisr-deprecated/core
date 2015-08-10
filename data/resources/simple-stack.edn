@@ -6,10 +6,8 @@
    }
   } 
  
- 
   :systems [
-    {:count 2 :template "small-redis" :instances [1 2] } 
-    {:count 1 :template "tiny-jvm" :instances [] }        
+    {:count 1 :template "small-redis" :instances []} 
+    {:count 1 :template "tiny-jvm" :instances []}        
   ]
-    
 }
