@@ -11,7 +11,7 @@
                  [org.clojure/core.incubator "0.1.3"]
                  [slingshot "0.10.3" ]
                  [org.clojure/core.memoize "0.5.7"]
-                 [org.flatland/useful "0.10.3"]
+                 [org.flatland/useful "0.11.3"]
                  [org.clojure/tools.macro "0.1.5"]
                  [org.clojure/java.data "0.1.1"]
                  ; templating
@@ -83,7 +83,7 @@
           :timeout 120000
         }
 
-        :dependencies [[org.clojure/tools.namespace "0.2.10"] [midje "1.6.3"]
+        :dependencies [[org.clojure/tools.namespace "0.2.10"] [midje "1.7.0"]
                        [redl "0.2.4"] [org.clojure/tools.trace "0.7.8"]]
         :injections  [(require '[redl core complete])]
         :resource-paths  ["src/main/resources/" "pkg/etc/celestial/"]
