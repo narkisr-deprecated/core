@@ -2,7 +2,6 @@
   "Stack feature"
   (:require 
     [celestial.workflows.stacks :as wf]
-    [flatland.useful.map :refer  (dissoc-in*)]
     [celestial.persistency.stacks :as s]
     [celestial.fixtures.data :refer (simple-stack)]
     [celestial.fixtures.core :refer (with-conf)]
