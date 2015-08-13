@@ -18,9 +18,35 @@
     [taoensso.timbre :refer  (refer-timbre)]
     [clojure.core.strint :refer (<<)]
     [slingshot.slingshot :refer  [throw+ try+]]
-    [clojure.core.async :refer (<!! >!! to-chan) :as async]))
+    [clojure.core.async :refer (<!! >!! to-chan thread) :as a]))
 
 (refer-timbre)
+
+(defn unordered-pipeline [n to xform from]
+  (dotimes [_ n]
+    (let [rf (fn [x] (>!! to x))
+          f (xform rf)]
+      (thread
+        (loop []
+          (when-some [x (<!! from)]
+            (f x)))))))
+(def to-sort
+  (a/to-chan [38 20 22 24 36 2 30 18 32 0 4 34 14 28 6 16 12 26 8 10]))
+
+(defn wait-and-return
+  [w]
+  (println (Thread/currentThread))
+  (Thread/sleep (* 100 w))
+  w)
+
+(def sorted (a/chan))
+
+(def xwait (map wait-and-return))
+
+(a/pipeline-blocking 3 sorted xwait to-sort)
+(unordered-pipeline 3 sorted xwait to-sort)
+
+(println (time (a/<!! (a/into [] sorted))))
 
 (deflow reload 
   "Reload all systems"
@@ -66,8 +92,8 @@
 (deflow stage
   "create and provision"
   [{:keys [systems defaults] :as spec}] 
-  (let [provided {} cs (async/merge (map (partial template-chan provided) systems))]
-     
+  (let [provided {} cs (a/merge (map (partial template-chan provided) systems))]
+
     ))
 
 (deflow run-action

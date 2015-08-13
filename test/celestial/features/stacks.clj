@@ -19,7 +19,7 @@
       (get-in (s/get-stack 1) [:shared :env])  => :qa
       (s/delete-stack "1") => 1)
     
-    (fact "stack staging" :integration :stacks :openstack
+    (fact "stack creation" :integration :stacks :openstack
        (s/add-stack simple-stack) => 1
        (wf/create simple-stack) => nil)))
 
