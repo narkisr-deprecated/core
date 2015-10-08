@@ -9,10 +9,12 @@
     [cemerick.friend.credentials :as creds]
     [swag.core :refer (swagger-routes GET- defroutes- errors)]))
 
-(defn static-path []
+#_(defn static-path []
   (let [cwd (System/getProperty "user.dir") parent "public/celestial-ui"
         build (<< "~{cwd}/~{parent}/build") bin (<< "~{cwd}/~{parent}/bin")]
     (if (fs/exists? build ) build bin)))
+
+(defn static-path [] "public/elm-ui/")
 
 (defroutes- sessions {:path "/sessions" :description "Session info"} 
   (GET- "/sessions" [] {:nickname "currentSession" :summary "Get current logged in user info"}
@@ -23,3 +25,4 @@
   (friend/logout (ANY "/logout" request  (ring.util.response/redirect "/")))
   (route/files "/" {:root (static-path)}))
  
+
